@@ -1,3 +1,71 @@
+## Backend (Spring Boot):
+
+### CsvParserController:
+
+- **Endpoints:**
+  - `/api/csv/upload` (POST): Uploads a CSV file containing employee information. It uses `MultipartFile` for file upload.
+  - `/api/csv/summary` (GET): Fetches the average salary summary for each job title.
+
+- **Why:**
+  - **Upload Endpoint:** To handle the file upload and parse the CSV data, saving it to the MySQL database.
+  - **Summary Endpoint:** To calculate and provide the average salary summary by job title.
+
+- **Connected to MySQL:**
+  - The backend is connected to MySQL using XAMPP. The `Employee` entity is persisted to the database using Spring Data JPA through the `EmployeeRepository`.
+
+- **Tested in Postman:**
+  - Both endpoints have been tested in Postman to ensure they handle file uploads and return the expected data.
+
+## Frontend (React):
+
+### Home Component:
+
+- **Components:**
+  - **UploadButton:** Handles file selection for upload.
+  - **ResultsTable:** Displays paginated tables for employee information and job summary.
+
+- **API Calls:**
+  - Utilizes `axios` to make HTTP requests to the backend.
+
+- **Why:**
+  - **Upload Button:** Allows users to select and upload CSV files for processing.
+  - **Results Table:** Displays the paginated list of employees and the job summary.
+
+- **CORS Configuration:**
+  - Uses `@CrossOrigin` in the backend `CsvParserController` to allow cross-origin requests from `http://localhost:3000` (the frontend).
+
+- **How It Works:**
+  - User selects a CSV file using the "Upload" button.
+  - Clicking "Process" triggers an HTTP POST request to the `/api/csv/upload` endpoint.
+  - The processed data is displayed in paginated tables on the frontend.
+
+## CORS (Cross-Origin Resource Sharing):
+
+- **Why:**
+  - Browsers have a security policy that prevents web pages from making requests to a different domain than the one that served the web page. CORS enables cross-origin requests.
+
+- **Implementation:**
+  - The `@CrossOrigin` annotation is used in the Spring Boot `CsvParserController` to specify that requests from `http://localhost:3000` are allowed.
+
+## Overall Flow:
+
+1. **File Upload:**
+   - User uploads a CSV file through the frontend.
+   - Frontend makes a request to the backend `/api/csv/upload` endpoint.
+
+2. **Data Processing:**
+   - Backend parses the CSV file, saves employee data to MySQL, and calculates job summary.
+
+3. **Data Display:**
+   - Processed data is sent back to the frontend.
+   - Frontend displays paginated tables for employee information and job summary.
+
+This architecture allows for separation of concerns, making the application scalable and maintainable.
+
+
+
+
+------------------------------------------------------------------------------------------------------------
 ## DNA Engineering Full-Stack Assignment
 Build a CSV Parser.
 
